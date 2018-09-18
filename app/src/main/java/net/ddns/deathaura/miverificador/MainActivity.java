@@ -2,20 +2,27 @@ package net.ddns.deathaura.miverificador;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     ///Instancia de zxing para el escaner del código de barras
     IntentIntegrator barcode_scanner;
+    TextView resulCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +30,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        resulCode=(TextView)findViewById(R.id.codebar);
+
         ///Ajustes para el scanner de código de barras
         barcode_scanner = new IntentIntegrator(this);
         barcode_scanner.setDesiredBarcodeFormats(IntentIntegrator.EAN_13);
@@ -37,12 +47,22 @@ public class MainActivity extends AppCompatActivity {
                 barcode_scanner.initiateScan();
             }
         });
+
+
+        DrawerLayout drawer=(DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle=new ActionBarDrawerToggle(this,drawer,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+        NavigationView navigationView=(NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+       // getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -70,10 +90,28 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 //con el código haces la consulta a la db para obtener la info del producto
                 String resultado = result.getContents();
-                Toast.makeText(this, "Código: " + resultado, Toast.LENGTH_LONG).show();
+                resulCode.setText(resultado);
+                //Toast.makeText(this, "Código: " + resultado, Toast.LENGTH_LONG).show();
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id=item.getItemId();
+        if (id==R.id.nav_home){
+
+        }else if(id==R.id.nav_register){
+
+        }else if(id==R.id.nav_gen_list){
+
+        }else if(id==R.id.nav_info){
+
+        }
+        DrawerLayout drawer=(DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="Home"/>
+        <item
+            android:id="@+id/nav_register"
+            android:icon="@drawable/ic_create_black_24dp"
+            android:title="Register product"/>
+        <item
+            android:id="@+id/nav_gen_list"
+            android:icon="@drawable/ic_playlist_add_black_24dp"
+            android:title="Generate list"
+            />
+        <item
+            android:id="@+id/nav_info"
+            android:icon="@drawable/ic_info_black_24dp"
+            android:title="About"/>
+    </group>
+
+</menu>
